@@ -1,6 +1,6 @@
 {
   "name": "@ludlovian/lock",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Serial lock",
   "type": "module",
   "exports": {
