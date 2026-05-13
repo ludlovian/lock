@@ -1,23 +1,20 @@
-import { suite, test } from 'node:test'
+import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import Lock from '../src/index.mjs'
+import Lock from '@ludlovian/lock'
 
-const isResolved = (p, ms = 10) =>
+const isResolved = p =>
   new Promise((resolve, reject) => {
-    setTimeout(() => resolve(false), ms)
     p.then(() => resolve(true), reject)
+    setImmediate(() => resolve(false))
   })
 
 const trigger = () => {
-  const fns = {}
-  return Object.assign(
-    new Promise((resolve, reject) => Object.assign(fns, { resolve, reject })),
-    fns
-  )
+  const { promise, resolve, reject } = Promise.withResolvers()
+  return Object.assign(promise, { resolve, reject })
 }
 
-suite('Lock', () => {
+test('Lock', () => {
   test('creation', () => {
     const l = new Lock()
     assert.ok(l instanceof Lock, 'is an instance of lock')

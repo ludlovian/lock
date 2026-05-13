@@ -38,3 +38,40 @@ runs the function, and finally `release`s the lock. The promise will resolve
 to the resolved value or rejection reason.
 
 The `.exec` value is already bound to the lock object.
+
+---
+
+## Gate
+
+A simple open / shut gate (aka manual reset event).
+
+```js
+import Gate from '@ludlovian/lock/gate'
+
+gate = new Gate()
+
+if (gate.isOpen) gate.close()
+setTimeout(() => gate.open(), 100)
+
+await gate.untilOpen()
+```
+
+### new Gate () => _Gate_
+
+Creates a new gate, which is initially open
+
+### .isOpen => _Boolean_
+
+Is the get open or not
+
+### .open()
+
+Opens the gate
+
+### .close()
+
+Closes the gate
+
+### .untilOpen() => _Promise_
+
+Waits until the gate is opened.
