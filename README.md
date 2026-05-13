@@ -64,11 +64,11 @@ Creates a new gate, which is initially open
 
 Is the get open or not
 
-### .open()
+### .open() => _this_
 
 Opens the gate
 
-### .close()
+### .close() => _this_
 
 Closes the gate
 

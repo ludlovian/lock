@@ -19,13 +19,15 @@ test('Gate', () => {
   test('close and reopen', async t => {
     const g = new Gate()
 
-    g.close()
+    let v = g.close()
+    assert.equal(v, g)
     assert.equal(g.isOpen, false)
 
     const pOpen = g.untilOpen()
     assert.equal(await isResolved(pOpen), false)
 
-    g.open()
+    v = g.open()
+    assert.equal(v, g)
     await Promise.resolve().then(() => {})
     assert.equal(g.isOpen, true)
     assert.equal(await isResolved(pOpen), true)

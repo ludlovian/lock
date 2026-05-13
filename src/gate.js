@@ -3,15 +3,17 @@ export default class Gate {
   #prom = undefined
 
   open () {
-    if (this.isOpen) return
+    if (this.isOpen) return this
     this.#prom?.resolve()
     this.isOpen = true
+    return this
   }
 
   close () {
-    if (!this.isOpen) return
+    if (!this.isOpen) return this
     this.#prom = Promise.withResolvers()
     this.isOpen = false
+    return this
   }
 
   untilOpen () {
