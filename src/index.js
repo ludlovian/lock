@@ -16,7 +16,9 @@ export default class Lock {
       this.#locked = true
       return Lock.#resolved
     }
-    return new Promise(resolve => this.#awaiters.push(resolve))
+    const { resolve, promise } = Promise.withResolvers()
+    this.#awaiters.push(resolve)
+    return promise
   }
 
   release () {
@@ -28,7 +30,7 @@ export default class Lock {
   async exec (fn) {
     try {
       await this.acquire()
-      return await Promise.resolve(fn())
+      return await Promise.try(fn)
     } finally {
       this.release()
     }
